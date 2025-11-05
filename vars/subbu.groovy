@@ -3,14 +3,19 @@ import com.subhash.builds.caluclator
 def call (Map pipelineparams) {
 
     caluclator caluclator = new caluclator(this)
+   
     pipelines {
     agent any
+    environment {
+        APPLICATION_NAME = "${pipelineParams.appName}"
+    }
     stages {
         stage ('Build') {
             steps {
                 script {
                     echo 'Building...'
                     println caluclator.add(2, 3)
+                    echo "Application Name is ${APPLICATION_NAME} "
                 }
             }
         }
