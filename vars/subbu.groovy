@@ -1,75 +1,49 @@
-import com.subhash.builds.caluclator
+import com.sujith.builds.Calculator
 
-def call (Map pipelineparams) {
+def call(Map pipelineParams){
+   Calculator cal = new Calculator(this)
 
-    caluclator caluclator = new caluclator(this)
-   
-    pipelines {
+
+
+pipeline{
     agent any
     environment {
         APPLICATION_NAME = "${pipelineParams.appName}"
     }
     stages {
-        stage ('Build') {
+
+        stage ('calculate'){
             steps {
                 script {
-                    echo 'Building...'
-                    println caluclator.add(2, 3)
-                    echo "Application Name is ${APPLICATION_NAME} "
+               echo "calling add method for reuasbility"
+               println cal.add(10,23);
                 }
             }
         }
-        stage ('Test') {
-            steps {
-                echo 'Testing...'
-            }
+       stage('Build'){
+           steps {
+            echo "*******building the application for ${env.APPLICATION_NAME}*********"
+           }
+       }
+
+       stage ('Test'){
+         steps {
+            echo "***********application testing **************"
+         }
+       }
+
+       stage ('devDeploy'){
+        steps {
+            echo "******deployong to dev env ******"
         }
-        stage ('Deploy') {
-            steps {
-                echo 'Deploying...'
-            }
+       }
+
+       stage ('testDeploy')
+       {
+        steps {
+            echo "******deployong to test env ******"
         }
-        stage ('Subbu Stage') {
-            steps {
-                echo 'This is Subbu stage...'
-            }
-        }
-        stage ('Final Stage') {
-            steps {
-                echo 'This is the final stage...'
-            }
-        }
+       }
     }
 }
 }
-
-// pipelines {
-//     agent any
-//     stages {
-//         stage ('Build') {
-//             steps {
-//                 echo 'Building...'
-//             }
-//         }
-//         stage ('Test') {
-//             steps {
-//                 echo 'Testing...'
-//             }
-//         }
-//         stage ('Deploy') {
-//             steps {
-//                 echo 'Deploying...'
-//             }
-//         }
-//         stage ('Subbu Stage') {
-//             steps {
-//                 echo 'This is Subbu stage...'
-//             }
-//         }
-//         stage ('Final Stage') {
-//             steps {
-//                 echo 'This is the final stage...'
-//             }
-//         }
-//     }
-// }
